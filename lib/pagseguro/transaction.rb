@@ -206,5 +206,21 @@ module PagSeguro
     def self.send_request(path)
       Request.get(path, 'v3')
     end
+
+    def self.load_from_response(response)
+      if response.success? and response.xml?
+        load_from_xml Nokogiri::XML(response.body).css("transaction").first
+      else
+        Response.new Errors.new(response)
+      end
+    end
+
+    def self.send_request(path)
+      Request.get(path, 'v3')
+    end
+
+    def self.load_from_xml(xml)
+      new Serializer.new(xml).serialize
+    end
   end
 end
