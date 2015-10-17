@@ -85,7 +85,7 @@ module PagSeguro
 
   # The configuration intance for the thread
   def self.configuration
-    Thread.current[:pagseguro_config] ||= PagSeguro::Config.new
+    @config ||= PagSeguro::Config.new
   end
 
   # Set the global configuration.
